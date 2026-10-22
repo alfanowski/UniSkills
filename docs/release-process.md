@@ -81,6 +81,7 @@ Until then, `beta` is the ceiling and the catalog says so.
 - [ ] `CHANGELOG.md` has a dated section with user-visible changes.
 - [ ] `docs/compatibility.md` reflects any newly verified environment, with the date.
 - [ ] `docs/decision-log.md` updated for any structural decision made during the cycle.
+- [ ] README counts (skills, packs, cases, tests) match the catalog and the suite.
 - [ ] No `TODO`/`TBD` markers anywhere (the validator checks skills; check docs manually).
 - [ ] `LICENSE` decision confirmed by the owner.
 - [ ] Tag created only after the above, and only with explicit authorization.
