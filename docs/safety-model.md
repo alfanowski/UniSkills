@@ -86,7 +86,8 @@ explicit error handling, no network, no writes outside a stated path, and a test
 
 ## 7. Supply chain of the repository itself
 
-- No runtime dependencies. `requirements.txt` does not exist on purpose.
+- No runtime dependencies. `requirements.txt` does not exist on purpose. CI installs PyYAML only as a
+  test oracle for the differential parser test; the suite skips that test when PyYAML is absent.
 - CI uses the runner's Python, no third-party actions beyond the official checkout/setup actions.
 - No secrets are required to run the tests.
 - `tools/check_secrets.py` scans on every CI run.
