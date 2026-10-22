@@ -16,7 +16,7 @@
 
 ---
 
-### Stop pasting prompts. Start running procedures.
+## Stop pasting prompts. Start running procedures.
 
 Prompts are excellent at producing text and terrible at guaranteeing a method. UniSkills is a set of
 installable skills that carry their own workflow, evidence rules, and stop conditions — so a code review
