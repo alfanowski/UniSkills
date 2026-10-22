@@ -132,7 +132,9 @@ could not happen before.
 - <unreviewed area / unexecuted check / assumption>
 ````
 
-Use `templates/finding-schema.json` when the output must be machine-readable.
+When a machine-readable artifact is required, emit one JSON object per finding with the fields above. A
+JSON Schema for these objects is published at `templates/finding-schema.json` in the UniSkills repository;
+it is an optional integration aid, not a dependency of this skill.
 
 ## Stop conditions
 

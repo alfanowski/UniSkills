@@ -18,7 +18,7 @@ reviewer can disagree with a specific line rather than with the whole document.
 | Visibility | public |
 | State before work | empty — no commits, no files, no license, `defaultBranchRef` empty |
 | Local directory | `~/Desktop/Projects/UniSkills` |
-| Branch used | `feat/v0.1.0` (root commit `d5137c2`) |
+| Branch used | `feat/v0.1.0`; root commit `d5137c2`, with follow-up docs commits on top |
 | `origin` remote | unchanged (`git@github.com` rewritten by clone as HTTPS, as configured) |
 
 The repository was cloned from the existing remote; no second repository, organization, or remote was
@@ -36,7 +36,7 @@ No push, tag, release, or issue was created.
 
 | | Before | After |
 | --- | --- | --- |
-| Files | 0 | 118 |
+| Files | 0 | 119 |
 | Commits | 0 | 1 (`d5137c2`) |
 | Tracked size | — | ~820 KB |
 | Package metadata | none | 12 skills, 6 packs, catalog of 46 entries |
@@ -54,8 +54,9 @@ Three layers, downward references only:
 2. **Skills** — self-contained bundles under `skills/<name>/`, each with `SKILL.md` plus two references.
 3. **Packs** — ordered playbooks under `packs/`, referencing skills without duplicating content.
 
-Key decisions and their rationale are in [`decision-log.md`](decision-log.md). The four that shape
-everything else:
+Key decisions and their rationale are in [`decision-log.md`](decision-log.md). Divergences from the
+starting specification are itemized in [`spec-reconciliation.md`](spec-reconciliation.md). The four that
+shape everything else:
 
 - **D2 — no standalone assembly skill.** The "reason like assembly" instruction is treated as a resolution
   analogy, not a product requirement. Instruction-level analysis lives as an on-demand reference inside

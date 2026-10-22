@@ -56,6 +56,9 @@ reverse-engineering capability, and record the entry in the catalog as `deferred
 table. It would duplicate `reverse-engineering` and would be impossible to evaluate meaningfully without a
 corpus of binaries.
 
+**Related.** All divergences from the starting specification are itemized in
+[spec-reconciliation.md](spec-reconciliation.md).
+
 ---
 
 ## D3 — Python standard library only
