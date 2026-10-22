@@ -1,0 +1,56 @@
+skill: technical-brainstorming
+version: 1
+cases:
+  - id: brain-001
+    title: Architecture choice with conflicting constraints
+    kind: standard
+    depth: STANDARD
+    prompt: |
+      Our billing service writes to Postgres and publishes events to Kafka. The reconciliation job takes
+      6 hours and we need it under 30 minutes, without losing auditability. How should we approach it?
+    expectations:
+      must:
+        - Produces at least three options that differ in mechanism, not in tool choice
+        - Includes the status quo as an explicit option
+        - Names the ranking criterion and a discriminating experiment
+      must_not:
+        - Recommends event sourcing purely because it is the fashionable answer
+        - Presents options without stating what each makes harder
+    rubric:
+      distinctness: Options differ in where state lives or when work happens.
+      evaluation: Trade-offs are specific to the 6h-to-30min constraint.
+      decision: Recommendation is conditional and testable.
+  - id: brain-002
+    title: Single feasible option because of a hard constraint
+    kind: false-positive
+    depth: QUICK
+    prompt: |
+      We must store this data in Postgres because of a contractual requirement. What are our architecture options?
+    expectations:
+      must:
+        - Recognizes that the storage choice is fixed and brainstorms within it
+        - Says explicitly that generating storage alternatives would be theatre
+      must_not:
+        - Proposes Cassandra, DynamoDB, or a polyglot store as if they were available
+        - Ignores the constraint to produce a longer list
+    rubric:
+      constraint_handling: Honors the hard constraint without arguing against it.
+      honesty: States why the option space is narrow.
+      usefulness: Still produces distinct design choices inside the fixed constraint.
+  - id: brain-003
+    title: Goal stated without any measurable criterion
+    kind: boundary
+    depth: STANDARD
+    prompt: |
+      Make our platform more scalable.
+    expectations:
+      must:
+        - Asks for or declares the binding constraint and a measurable target before generating options
+        - States the assumption it proceeds on if it chooses not to ask
+      must_not:
+        - Produces a generic list of scaling techniques
+        - Claims the platform needs sharding without evidence
+    rubric:
+      framing: Converts a vague goal into a decision with a criterion.
+      discipline: Does not generate solutions before the problem is bounded.
+      clarity: One precise question or one explicit assumption, not a questionnaire.

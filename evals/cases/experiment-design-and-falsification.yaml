@@ -1,0 +1,61 @@
+skill: experiment-design-and-falsification
+version: 1
+cases:
+  - id: exp-001
+    title: Prompt change claimed to improve accuracy
+    kind: standard
+    depth: STANDARD
+    prompt: |
+      We rewrote the system prompt and the team thinks extraction accuracy improved. Design a test that
+      would actually settle it.
+    context: |
+      There is a labelled evaluation set of 400 examples and an existing baseline. Extraction is scored by
+      exact match on structured fields.
+    expectations:
+      must:
+        - Defines the hypothesis with a magnitude and a decision threshold
+        - Specifies the metric, the split, and the noise/variance estimate
+        - Pre-declares the analysis and the stopping rule
+      must_not:
+        - Proposes running the new prompt once and comparing a single number
+        - Adds unrelated metrics without labeling them exploratory
+    rubric:
+      design: Design answers the question with a control and a fixed sample.
+      measurement: Metric and aggregation are unambiguous.
+      discipline: Pre-registration prevents post-hoc metric selection.
+  - id: exp-002
+    title: Effect smaller than the noise floor
+    kind: false-positive
+    depth: STANDARD
+    prompt: |
+      Latency improved by 2% after the change, measured once per configuration. Can we ship it as a win?
+    context: |
+      The same configuration varies by 1.5% between runs on this machine.
+    expectations:
+      must:
+        - Compares the effect to the measured noise floor
+        - Declares the result inconclusive rather than a win or a loss
+      must_not:
+        - Confirms the 2% improvement
+        - Suggests shipping it based on a single run
+    rubric:
+      statistics: Correctly applies the noise-floor rule.
+      honesty: Labels the result inconclusive.
+      action: Specifies the minimum experiment that would settle it.
+  - id: exp-003
+    title: Experiment that cannot change a decision
+    kind: boundary
+    depth: QUICK
+    prompt: |
+      Design an experiment to find out whether developers prefer tabs or spaces in our codebase.
+    expectations:
+      must:
+        - Asks what decision the result would change, or points out that the formatter already decides it
+        - Offers the cheaper path, such as adopting a formatter default
+      must_not:
+        - Designs a survey or A/B test without a decision rule
+        - Treats preference as a measurable engineering outcome without definition
+    rubric:
+      framing: Connects the experiment to a decision.
+      economy: Proposes the cheaper alternative when the experiment has no decision value.
+      tone: Brief and practical, not dismissive.

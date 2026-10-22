@@ -1,0 +1,100 @@
+schema_version: 1
+updated: "2026-10-22"
+notes: >
+  Packs are ordered playbooks over existing skills. They never contain duplicated skill content.
+  `skills` lists membership; `order` is the recommended execution sequence.
+
+packs:
+  - id: engineering-audit
+    name: Engineering Audit
+    purpose: Assess a change or system across structure, correctness, adversarial exposure, and cost before committing to it.
+    audience: Tech leads, reviewers, and engineers preparing a high-risk merge or a pre-release review.
+    doc: packs/engineering-audit.md
+    limitations: Static analysis only unless the user authorizes execution; does not replace a dedicated penetration test.
+    skills:
+      - architecture-design-review
+      - universal-code-review
+      - security-review
+      - performance-review
+    order:
+      - architecture-design-review
+      - universal-code-review
+      - security-review
+      - performance-review
+
+  - id: security-audit
+    name: Security Audit
+    purpose: Find reachable weaknesses in an authorized scope, verify them, and produce a defensible report.
+    audience: Security engineers and maintainers auditing their own codebase.
+    doc: packs/security-audit.md
+    limitations: Requires written authorization for anything beyond static review of owned code.
+    skills:
+      - security-review
+      - universal-code-review
+      - evidence-validation
+    order:
+      - security-review
+      - universal-code-review
+      - evidence-validation
+
+  - id: research-to-decision
+    name: Research to Decision
+    purpose: Turn an open technical question into a sourced, falsifiable, and finally committed decision.
+    audience: Engineers and researchers choosing an approach under uncertainty.
+    doc: packs/research-to-decision.md
+    limitations: No access to paywalled literature; results depend on the quality of available sources.
+    skills:
+      - technical-research
+      - evidence-validation
+      - experiment-design-and-falsification
+      - technical-brainstorming
+    order:
+      - technical-research
+      - evidence-validation
+      - technical-brainstorming
+      - experiment-design-and-falsification
+
+  - id: idea-to-spec
+    name: Idea to Specification
+    purpose: Move from a vague ambition to distinct options and then to one implemented, reviewable design.
+    audience: Product-minded engineers and architects at the start of a project.
+    doc: packs/idea-to-spec.md
+    limitations: Ends at a decision record; implementation planning is out of scope until specification-writing ships.
+    skills:
+      - technical-brainstorming
+      - technical-research
+      - architecture-design-review
+    order:
+      - technical-brainstorming
+      - technical-research
+      - architecture-design-review
+
+  - id: debugging-and-regression
+    name: Debugging and Regression
+    purpose: Move from a failure to a confirmed cause, a correct fix, and a test that prevents its return.
+    audience: On-call engineers and maintainers investigating a defect.
+    doc: packs/debugging-and-regression.md
+    limitations: Requires the ability to reproduce or at least observe the failure; may involve production access.
+    skills:
+      - root-cause-debugging
+      - universal-code-review
+      - experiment-design-and-falsification
+    order:
+      - root-cause-debugging
+      - universal-code-review
+      - experiment-design-and-falsification
+
+  - id: reverse-engineering-lab
+    name: Reverse Engineering Lab
+    purpose: Characterize an authorized artifact, reconstruct its behavior, and check whether the reconstruction implies security exposure.
+    audience: Researchers and defenders working on artifacts they own or are authorized to analyze.
+    doc: packs/reverse-engineering-lab.md
+    limitations: Static by default; dynamic analysis requires an isolated environment and explicit authorization.
+    skills:
+      - reverse-engineering
+      - evidence-validation
+      - security-review
+    order:
+      - reverse-engineering
+      - evidence-validation
+      - security-review

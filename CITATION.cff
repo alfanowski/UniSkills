@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use UniSkills in research or in a published system, cite it as below."
+title: "UniSkills: universal, evidence-driven Agent Skills for engineering work"
+abstract: >-
+  A portable suite of Agent Skills that encode repeatable engineering procedures with explicit evidence
+  labels, risk-based depth profiles, context and tool economy rules, and deterministic validation.
+type: software
+license: MIT
+repository-code: "https://github.com/alfanowski/UniSkills"
+url: "https://github.com/alfanowski/UniSkills"
+version: "0.1.0"
+date-released: "2026-10-22"
+keywords:
+  - agent-skills
+  - ai-agents
+  - code-review
+  - security-review
+  - performance-engineering
+  - reverse-engineering
+  - technical-research
+  - reproducibility
+authors:
+  - name: "The UniSkills Authors"

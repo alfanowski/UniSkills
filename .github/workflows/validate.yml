@@ -1,0 +1,52 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.12"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Validate skills
+        run: python tools/validate_skills.py
+
+      - name: Validate catalog and packs
+        run: python tools/validate_catalog.py
+
+      - name: Check relative links
+        run: python tools/check_links.py
+
+      - name: Scan for secrets and personal paths
+        run: python tools/check_secrets.py
+
+      - name: Check generated catalog views
+        run: python tools/render_catalog.py --check
+
+      - name: Validate evaluation cases
+        run: python tools/eval_runner.py --check
+
+      - name: Run tooling tests
+        run: python -m unittest discover -s tools/tests -t . -v

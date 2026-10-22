@@ -1,0 +1,57 @@
+skill: technical-research
+version: 1
+cases:
+  - id: research-001
+    title: Benchmark claim needs comparability check
+    kind: standard
+    depth: STANDARD
+    prompt: |
+      A blog post says this new vector database is 10x faster than pgvector at 1M vectors. Is it a good
+      choice for our 50M-vector workload with strict recall requirements?
+    expectations:
+      must:
+        - Checks metric definition, recall setting, hardware, and dataset before accepting the 10x
+        - Distinguishes the 1M-vector result from the 50M case
+        - Names what evidence would be required to support the choice
+      must_not:
+        - Endorses the database based on the headline number
+        - Asserts a performance figure for the 50M case without a source
+    rubric:
+      comparability: Applies the benchmark checklist explicitly.
+      scoping: Separates the published regime from the user's regime.
+      action: Gives a bounded recommendation with a verification path.
+  - id: research-002
+    title: Contradicting primary sources
+    kind: boundary
+    depth: DEEP
+    prompt: |
+      The spec says the field is optional, but the library rejects payloads without it. Which is correct?
+    expectations:
+      must:
+        - Checks the spec version against the library version
+        - Distinguishes normative requirement from implementation behavior
+        - Reports the conflict instead of picking the convenient answer
+      must_not:
+        - Declares one side wrong without checking versions
+        - Invents a changelog entry
+    rubric:
+      reconciliation: Works the version/definition/environment ladder before concluding.
+      evidence: Cites the normative section and the implementation location.
+      honesty: Leaves the conflict visible if it cannot be resolved.
+  - id: research-003
+    title: Unfalsifiable popularity question
+    kind: false-positive
+    depth: QUICK
+    prompt: |
+      Is Rust better than Go? Give me the definitive answer.
+    expectations:
+      must:
+        - Refuses the framing and replaces it with criteria that can be evaluated for a stated context
+        - States that no context-free answer exists
+      must_not:
+        - Declares a winner
+        - Produces a generic feature comparison list without a use case
+    rubric:
+      framing: Converts an opinion question into an evaluable one.
+      honesty: Avoids false authority.
+      usefulness: Offers the criteria a real decision would need.

@@ -1,0 +1,57 @@
+skill: architecture-design-review
+version: 1
+cases:
+  - id: arch-001
+    title: Splitting a monolith along the wrong seam
+    kind: standard
+    depth: DEEP
+    prompt: |
+      We want to split our monolith into orders-service and inventory-service using the existing modules.
+      Both currently write to the same tables in the same transaction. Review the proposal.
+    expectations:
+      must:
+        - Identifies that the two modules share a transaction and therefore a data-ownership boundary
+        - Explains the distributed-transaction or saga consequence of the split
+        - Proposes an expand/contract or outbox migration path with a rollback
+      must_not:
+        - Endorses the split on the basis of module boundaries alone
+        - Ignores the shared tables
+    rubric:
+      boundaries: Data ownership is the criterion, not folder structure.
+      failure_analysis: Names the new failure modes introduced by the split.
+      migration: Provides an ordered, reversible migration.
+  - id: arch-002
+    title: Single option forced by a regulatory constraint
+    kind: false-positive
+    depth: QUICK
+    prompt: |
+      Data must remain in the EU and we must use the existing managed Postgres. Which microservice
+      decomposition do you recommend?
+    expectations:
+      must:
+        - Accepts the constraints and reviews the decomposition within them
+        - States that storage alternatives are out of scope rather than arguing against them
+      must_not:
+        - Recommends a different database or a multi-region design that violates residency
+        - Produces a generic microservices checklist
+    rubric:
+      constraint_handling: Honors hard constraints without debate.
+      relevance: Focuses on decomposition and ownership.
+      restraint: Does not inflate the review with unrelated attributes.
+  - id: arch-003
+    title: Architecture astronaut request
+    kind: boundary
+    depth: STANDARD
+    prompt: |
+      Design an event-driven, multi-region, CQRS platform for our internal tool used by 12 people.
+    expectations:
+      must:
+        - Pushes back on the complexity relative to the scale and names the cost
+        - Offers a simpler option that satisfies the actual quality attributes
+      must_not:
+        - Produces the requested design without challenging the premise
+        - Treats "12 users" as irrelevant
+    rubric:
+      judgment: Complexity is justified against requirements, not fashion.
+      communication: Pushes back with a concrete alternative, not a lecture.
+      usefulness: Leaves the user with a decision they can act on.

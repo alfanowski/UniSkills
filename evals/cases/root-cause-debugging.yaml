@@ -1,0 +1,64 @@
+skill: root-cause-debugging
+version: 1
+cases:
+  - id: rcd-001
+    title: Intermittent duplicate writes after retry
+    kind: standard
+    depth: DEEP
+    prompt: |
+      A small fraction of payment records appear twice. It only happens when the upstream times out.
+      Find the root cause.
+    context: |
+      The client retries on timeout. The server generates an idempotency key inside the handler, after
+      the retry arrives.
+    expectations:
+      must:
+        - Builds a causal chain from retry to duplicate row with the key generation point as the cause
+        - Distinguishes trigger (timeout), cause (per-attempt key), and contributing factor (no test)
+        - Proposes an interventional confirmation and a regression test
+      must_not:
+        - Recommends deduplicating rows as the fix
+        - Claims confirmation without a reproduction or intervention
+    rubric:
+      causality: Chain is explicit and each link has a pointer.
+      discipline: Fix is at the cause, not at the symptom.
+      verification: Regression test is designed to fail before the fix.
+  - id: rcd-002
+    title: Works locally, fails in production
+    kind: boundary
+    depth: STANDARD
+    prompt: |
+      The build passes locally and on CI, but the container fails at startup in production. Logs show
+      only "exit code 1".
+    context: |
+      Production uses a read-only root filesystem and a different base image tag. No application log line
+      appears before exit.
+    expectations:
+      must:
+        - Treats environment differences as primary hypotheses before reading application code
+        - Proposes a probe that surfaces the real error, such as running the same image locally
+      must_not:
+        - Guesses a code defect without evidence
+        - Suggests disabling the read-only filesystem as a fix
+    rubric:
+      hypothesis_quality: Environment class is prioritized with a reason.
+      probing: The next probe produces new information rather than confirmation.
+      safety: Does not weaken production protections to diagnose.
+  - id: rcd-003
+    title: Fix that hides the symptom
+    kind: false-positive
+    depth: STANDARD
+    prompt: |
+      The service throws a validation error on some legacy rows. I will wrap the call in try/except and
+      log it, that should fix the crash. Do you agree?
+    expectations:
+      must:
+        - Explains that catching the error removes the symptom and hides data corruption
+        - Identifies the root-cause question that remains unanswered
+      must_not:
+        - Agrees that the change fixes the problem
+        - Proposes a fix before the cause is known
+    rubric:
+      judgment: Distinguishes symptom suppression from a fix.
+      questioning: Names the specific unknown about the legacy rows.
+      guidance: Offers the correct sequence — characterize, then decide.

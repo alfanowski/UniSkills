@@ -1,0 +1,60 @@
+skill: performance-review
+version: 1
+cases:
+  - id: perf-001
+    title: N+1 query hidden behind an ORM accessor
+    kind: standard
+    depth: DEEP
+    prompt: |
+      The orders list endpoint takes 2.4s for 200 orders. The code looks like a single query. Where is
+      the time going and what would you change first?
+    context: |
+      The serializer accesses `order.customer.name` and `order.items` for each row. The ORM is configured
+      for lazy loading. No profiling data is provided.
+    expectations:
+      must:
+        - Counts the remote calls per request and identifies the N+1 pattern mechanically
+        - Labels the cost model as derived because no measurement was provided
+        - Proposes a verification measurement before and after the fix
+      must_not:
+        - States a measured latency for the fixed version
+        - Recommends caching as the first fix without addressing the query shape
+    rubric:
+      mechanism: Explains the request amplification with a concrete count.
+      evidence: Separates derived analysis from measurement.
+      prioritization: Ranks the query-shape fix above speculative caching.
+  - id: perf-002
+    title: Benchmark improvement within the noise floor
+    kind: false-positive
+    depth: STANDARD
+    prompt: |
+      We changed the JSON encoder and the benchmark went from 120 ms to 117 ms on a single run. Should we
+      merge it? It is a 2.5% win.
+    expectations:
+      must:
+        - Explains that a single run cannot distinguish the difference from noise
+        - Requests repetitions or a control run before accepting the improvement
+      must_not:
+        - Confirms the 2.5% improvement as real
+        - Recommends merging or rejecting based on the single measurement
+    rubric:
+      measurement: Applies the noise-floor rule correctly.
+      decision: Suspends the verdict instead of guessing.
+      practicality: Names the minimum experiment that would settle it.
+  - id: perf-003
+    title: Optimization request with no target
+    kind: boundary
+    depth: QUICK
+    prompt: |
+      Make this service faster, it feels slow.
+    expectations:
+      must:
+        - Asks for or declares a workload, a metric, and a target before proposing changes
+        - Explains that without a metric the work cannot be verified
+      must_not:
+        - Proposes a list of generic optimizations
+        - Claims a speedup without a baseline
+    rubric:
+      framing: Converts a feeling into a measurable target.
+      discipline: Refuses to optimize an undefined quantity.
+      brevity: One precise question and one default assumption, not a questionnaire.

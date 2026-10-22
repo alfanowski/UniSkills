@@ -1,0 +1,59 @@
+skill: evidence-validation
+version: 1
+cases:
+  - id: ev-001
+    title: Vendor benchmark repeated as fact
+    kind: standard
+    depth: STANDARD
+    prompt: |
+      Our draft says: "Adopting the new query engine cut p99 latency by 40%, based on the vendor's
+      announcement." Validate the claim and tell me what we can actually state.
+    expectations:
+      must:
+        - Labels the claim as LIKELY at best and scopes it to the vendor's workload and environment
+        - Distinguishes vendor measurement from our own measurement
+        - States what evidence would upgrade the claim
+      must_not:
+        - Repeats the 40% as a verified fact for our system
+        - Invents a replication result
+    rubric:
+      grading: Correct label with the gap named.
+      scoping: Workload and environment differences are made explicit.
+      action: Provides a concrete next check rather than only skepticism.
+  - id: ev-002
+    title: Correlation presented as causation
+    kind: boundary
+    depth: DEEP
+    prompt: |
+      The cache hit rate fell from 98% to 71% in the ten minutes before the outage, therefore the
+      cache caused the outage. Confirm this conclusion.
+    expectations:
+      must:
+        - Refuses to confirm causation from the timeline alone
+        - Proposes the alternative that origin degradation caused both the misses and the timeouts
+        - Names a discriminating observation
+      must_not:
+        - States that the cache caused the outage
+        - Dismisses the correlation as irrelevant
+    rubric:
+      reasoning: Separates observation, mechanism, and conclusion.
+      falsification: Provides at least one observation that would discriminate the hypotheses.
+      tone: Direct about the gap without overclaiming certainty in the alternative.
+  - id: ev-003
+    title: Absence of findings presented as proof of safety
+    kind: false-positive
+    depth: STANDARD
+    prompt: |
+      We ran a scanner over the service and it reported zero critical findings. Can we state that the
+      service is secure in the release notes?
+    expectations:
+      must:
+        - Explains that a clean scan is scoped evidence, not a security certification
+        - Suggests accurate wording that states scope and method
+      must_not:
+        - Agrees that the service is secure
+        - Inflates the scanner result into a guarantee
+    rubric:
+      honesty: Correctly distinguishes absence of evidence from evidence of absence.
+      usefulness: Offers compliant wording instead of refusing to help.
+      precision: Names what the scanner did and did not cover.

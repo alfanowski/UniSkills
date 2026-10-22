@@ -1,0 +1,638 @@
+schema_version: 1
+updated: "2026-10-22"
+maintainer: "UniSkills"
+notes: >
+  Machine-readable catalog. `flagship` entries must exist on disk with passing validators and at
+  least three evaluation cases. `planned` and `deferred` entries must NOT have directories; they
+  exist to keep the taxonomy honest and the roadmap visible.
+
+skills:
+  # ---------------------------------------------------------------------------------------------
+  # Core / meta
+  # ---------------------------------------------------------------------------------------------
+  - id: uniskills-router
+    name: UniSkills Router
+    family: core
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Classifies a request, selects the smallest sufficient skill or pack, assigns depth, and emits an executable routing decision.
+    use_when: A request matches several skills, spans a workflow, or the right depth is unclear.
+    not_for: [performing the analysis itself, trivial single-step tasks]
+    risk: low
+    packs: []
+    tools_optional: [shell, git]
+    path: skills/uniskills-router
+    evals: evals/cases/uniskills-router.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: context-efficiency
+    name: Context Efficiency
+    family: core
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Controls reading strategy, tool-output shaping, evidence reuse, and checkpoint discipline so long tasks stay coherent without waste.
+    use_when: The artifact is too large to read fully, the session is long, or tool output is flooding the context.
+    not_for: [deciding the correct answer, small fully-readable artifacts]
+    risk: low
+    packs: []
+    tools_optional: [shell, ripgrep, git, jq]
+    path: skills/context-efficiency
+    evals: evals/cases/context-efficiency.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: evidence-validation
+    name: Evidence Validation
+    family: core
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Audits the claims behind an analysis, assigns evidence labels, and finds unsupported assertions and broken inferences.
+    use_when: A report will inform a decision, sources conflict, or AI-generated technical content needs an independence pass.
+    not_for: [gathering new sources, judging code correctness]
+    risk: low
+    packs: [security-audit, research-to-decision, reverse-engineering-lab]
+    tools_optional: [browser, shell]
+    path: skills/evidence-validation
+    evals: evals/cases/evidence-validation.yaml
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Engineering
+  # ---------------------------------------------------------------------------------------------
+  - id: universal-code-review
+    name: Universal Code Review
+    family: engineering
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Reviews a change for correctness, contract violations, resource and concurrency hazards, and test gaps, with severity and a merge verdict.
+    use_when: A pull request, patch, commit, or single function needs a correctness judgment.
+    not_for: [exploit hunting in third-party systems, latency or memory measurement, greenfield design]
+    risk: low
+    packs: [engineering-audit, security-audit, debugging-and-regression]
+    tools_optional: [git, shell, test runner]
+    path: skills/universal-code-review
+    evals: evals/cases/universal-code-review.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: root-cause-debugging
+    name: Root Cause Debugging
+    family: engineering
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Reconstructs a causal chain from symptom to root cause using ranked falsifiable hypotheses, differential evidence, and interventional confirmation.
+    use_when: Something fails, is intermittent, differs across environments, or corrupts data and the cause is unknown.
+    not_for: [reviewing a patch, unknown binaries, performance regressions with a known mechanism]
+    risk: low
+    packs: [debugging-and-regression]
+    tools_optional: [shell, debugger, git, test runner]
+    path: skills/root-cause-debugging
+    evals: evals/cases/root-cause-debugging.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: architecture-design-review
+    name: Architecture Design Review
+    family: architecture
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Evaluates or produces an architecture against quality-attribute scenarios, failure modes, migration cost, and reversibility, ending in a decision record.
+    use_when: A service boundary, data ownership decision, migration, or structural option must be decided.
+    not_for: [unconstrained ideation, single-file review, adversarial threat modelling]
+    risk: medium
+    packs: [engineering-audit, idea-to-spec]
+    tools_optional: [shell, git]
+    path: skills/architecture-design-review
+    evals: evals/cases/architecture-design-review.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: performance-review
+    name: Performance Review
+    family: performance
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Determines where execution cost actually comes from and whether performance claims hold, separating measurement from estimate and ranking bottlenecks by decision value.
+    use_when: A system is slow, an SLO is at risk, a benchmark needs interpretation, or an optimisation must be justified.
+    not_for: [functional correctness, experiment methodology, capacity planning without workload data]
+    risk: low
+    packs: [engineering-audit]
+    tools_optional: [shell, profiler, benchmark harness]
+    path: skills/performance-review
+    evals: evals/cases/performance-review.yaml
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Security
+  # ---------------------------------------------------------------------------------------------
+  - id: security-review
+    name: Security Review
+    family: security
+    status: flagship
+    maturity: beta
+    priority: P0
+    summary: Reviews an authorized codebase, change, or design for reachable weaknesses by modelling assets, trust boundaries, and source-to-sink paths.
+    use_when: A change touches auth, parsing, files, secrets, or a new trust boundary, or the user asks whether something is exploitable.
+    not_for: [third-party testing without authorization, exploit development, compliance certification]
+    risk: high
+    packs: [engineering-audit, security-audit, reverse-engineering-lab]
+    tools_optional: [shell, git, ripgrep]
+    path: skills/security-review
+    evals: evals/cases/security-review.yaml
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Research and decision
+  # ---------------------------------------------------------------------------------------------
+  - id: technical-research
+    name: Technical Research
+    family: research
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Answers a technical or scientific question from primary sources, with version applicability, contradiction search, source ledger, and explicit confidence.
+    use_when: The question concerns state of the art, a standard's actual behavior, or the credibility of a published claim.
+    not_for: [auditing claims already produced, designing the experiment, summarizing a provided document]
+    risk: low
+    packs: [research-to-decision, idea-to-spec]
+    tools_optional: [browser, shell]
+    path: skills/technical-research
+    evals: evals/cases/technical-research.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: technical-brainstorming
+    name: Technical Brainstorming
+    family: research
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Generates mechanism-distinct options for an open design question, tests them against explicit criteria, and returns a conditional recommendation with a discriminating experiment.
+    use_when: The user asks how to approach a problem, wants alternatives, or the current plan is defended by inertia.
+    not_for: [reviewing an existing design, factual research, merge decisions]
+    risk: low
+    packs: [idea-to-spec, research-to-decision]
+    tools_optional: [shell]
+    path: skills/technical-brainstorming
+    evals: evals/cases/technical-brainstorming.yaml
+    last_reviewed: "2026-10-22"
+
+  - id: experiment-design-and-falsification
+    name: Experiment Design and Falsification
+    family: research
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Converts a claim into a falsifiable experiment with controls, confounders, a pre-declared decision rule, and honest reporting of negative results.
+    use_when: An improvement is claimed, a benchmark must be trustworthy, or an ablation needs designing.
+    not_for: [literature search, profiling a known bottleneck, exploratory ideation]
+    risk: low
+    packs: [research-to-decision, debugging-and-regression]
+    tools_optional: [shell, benchmark harness, statistics runtime]
+    path: skills/experiment-design-and-falsification
+    evals: evals/cases/experiment-design-and-falsification.yaml
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Systems and reverse engineering
+  # ---------------------------------------------------------------------------------------------
+  - id: reverse-engineering
+    name: Reverse Engineering
+    family: systems
+    status: flagship
+    maturity: beta
+    priority: P1
+    summary: Reconstructs the structure and behavior of an authorized artifact from static and dynamic evidence, escalating to ISA and ABI analysis only when the question requires it.
+    use_when: A binary, firmware image, file format, or protocol must be understood or reimplemented.
+    not_for: [unauthorized targets, exploit development, reading available source]
+    risk: high
+    packs: [reverse-engineering-lab]
+    tools_optional: [file, objdump, readelf, ghidra, gdb, strings]
+    path: skills/reverse-engineering
+    evals: evals/cases/reverse-engineering.yaml
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Planned: core
+  # ---------------------------------------------------------------------------------------------
+  - id: specification-writing
+    name: Specification Writing
+    family: core
+    status: planned
+    priority: P1
+    summary: Turns requirements and decisions into an implementable, testable specification with acceptance criteria and explicit non-goals.
+    use_when: A design must become an implementation contract.
+    not_for: [ideation, code review]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: task-planning
+    name: Task Planning
+    family: core
+    status: planned
+    priority: P2
+    summary: Decomposes a complex task into verifiable steps with dependencies, checkpoints, and abort conditions.
+    use_when: A task spans multiple sessions or workstreams.
+    not_for: [single-step tasks, routing]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: tool-discovery
+    name: Tool Discovery
+    family: core
+    status: planned
+    priority: P3
+    summary: Detects available capabilities and selects tools by expected information value and cost, without inventing availability.
+    use_when: The environment is unknown and the analysis depends on tool capability.
+    not_for: [routine tasks with known tools]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: result-verification
+    name: Result Verification
+    family: core
+    status: deferred
+    priority: P3
+    summary: Final quality gate over a produced artifact. Deferred because evidence-validation plus the stop conditions in each skill cover the need without a separate invocation.
+    use_when: A high-stakes artifact is about to be delivered.
+    not_for: [work in progress]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Planned: engineering
+  # ---------------------------------------------------------------------------------------------
+  - id: test-strategy
+    name: Test Strategy
+    family: engineering
+    status: planned
+    priority: P1
+    summary: Designs a test portfolio matched to failure risk, with coverage rationale, fixtures, and maintenance cost.
+    use_when: A codebase has weak or misallocated tests, or a new system needs a test plan.
+    not_for: [reviewing a specific patch, writing the tests]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: safe-refactoring
+    name: Safe Refactoring
+    family: engineering
+    status: planned
+    priority: P1
+    summary: Plans behavior-preserving structural change with characterization tests, staged moves, and rollback points.
+    use_when: A refactor is large enough to need sequencing.
+    not_for: [behavior changes, greenfield code]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: api-contract-review
+    name: API and Contract Review
+    family: engineering
+    status: planned
+    priority: P1
+    summary: Reviews API design for compatibility, versioning, error semantics, idempotency, and consumer impact.
+    use_when: A public or cross-team interface changes.
+    not_for: [internal implementation review]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: database-and-migrations-review
+    name: Database and Migration Review
+    family: engineering
+    status: planned
+    priority: P1
+    summary: Reviews schema changes, lock behavior, backfill safety, and rollback for live databases.
+    use_when: A migration will run against production data.
+    not_for: [query micro-optimisation, ORM style]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: distributed-systems-review
+    name: Distributed Systems Review
+    family: systems
+    status: planned
+    priority: P2
+    summary: Reviews consistency, partition behavior, retries, idempotency, and failure propagation across service boundaries.
+    use_when: A design spans multiple services or regions.
+    not_for: [single-process concurrency]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: reliability-and-failure-analysis
+    name: Reliability and Failure Analysis
+    family: systems
+    status: planned
+    priority: P2
+    summary: Quantifies failure modes, error budgets, blast radius, and recovery paths for a running system.
+    use_when: An SLO is at risk or an incident review needs structure.
+    not_for: [root-causing a single bug]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: codebase-onboarding-and-mapping
+    name: Codebase Onboarding and Mapping
+    family: engineering
+    status: planned
+    priority: P2
+    summary: Builds a navigable map of an unfamiliar repository — entry points, data model, hot paths, and conventions.
+    use_when: Joining a codebase or preparing a large audit.
+    not_for: [targeted bug hunts]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: build-ci-cd-review
+    name: Build and CI/CD Review
+    family: engineering
+    status: planned
+    priority: P3
+    summary: Reviews build reproducibility, pipeline privilege, caching correctness, and release safety.
+    use_when: Build times, flakiness, or supply-chain exposure need assessment.
+    not_for: [application logic review]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Planned: security
+  # ---------------------------------------------------------------------------------------------
+  - id: threat-modeling
+    name: Threat Modeling
+    family: security
+    status: planned
+    priority: P1
+    summary: Builds an asset-actor-boundary threat model with abuse cases and mitigations before implementation.
+    use_when: A new component or data flow is being designed.
+    not_for: [runtime exploitation, compliance certification]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: dependency-vulnerability-audit
+    name: Dependency and Supply Chain Audit
+    family: security
+    status: planned
+    priority: P1
+    summary: Assesses dependency risk including provenance, maintenance, advisory coverage, and install-time behavior.
+    use_when: Adopting or upgrading a dependency, or auditing an existing lockfile.
+    not_for: [scanner output recitation]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: secrets-and-configuration-audit
+    name: Secrets and Configuration Audit
+    family: security
+    status: planned
+    priority: P2
+    summary: Finds secrets exposure and unsafe defaults across config, images, logs, and deployment manifests.
+    use_when: Preparing a release or investigating leakage.
+    not_for: [credential rotation execution]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: privacy-and-data-flow-review
+    name: Privacy and Data Flow Review
+    family: security
+    status: planned
+    priority: P2
+    summary: Maps personal data flows, retention, and third-party egress against stated policy.
+    use_when: A feature collects or moves personal data.
+    not_for: [legal advice]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: cryptography-implementation-review
+    name: Cryptography Implementation Review
+    family: security
+    status: planned
+    priority: P2
+    summary: Reviews primitive selection, key management, nonce handling, and protocol composition.
+    use_when: Code performs encryption, signing, or key derivation.
+    not_for: [protocol design from scratch, legal export questions]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: cloud-and-infrastructure-security
+    name: Cloud and Infrastructure Security
+    family: security
+    status: planned
+    priority: P2
+    summary: Reviews IAM breadth, network exposure, secret paths, and tenant isolation in cloud infrastructure.
+    use_when: Infrastructure changes or an environment is being hardened.
+    not_for: [active exploitation]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Planned: systems and reverse engineering
+  # ---------------------------------------------------------------------------------------------
+  - id: assembly-machine-code-analysis
+    name: Assembly and Machine Code Analysis (deferred)
+    family: systems
+    status: deferred
+    priority: P3
+    summary: Intentionally not a standalone flagship. Instruction-level, ABI, and calling-convention analysis is delivered as an on-demand reference inside reverse-engineering, because a separate skill would duplicate its evidence model.
+    use_when: Use reverse-engineering and load its low-level reference.
+    not_for: [general code review, source-level debugging]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: protocol-and-file-format-reconstruction
+    name: Protocol and File Format Reconstruction
+    family: systems
+    status: planned
+    priority: P2
+    summary: Recovers field boundaries and message semantics from samples and captures through differential analysis.
+    use_when: A format or protocol must be parsed or reimplemented.
+    not_for: [unauthorized interception]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: binary-diff-and-regression-analysis
+    name: Binary Diff and Regression Analysis
+    family: systems
+    status: planned
+    priority: P2
+    summary: Compares builds to locate behavioral change, patched defects, or unexpected code movement.
+    use_when: Two builds differ and the change must be explained.
+    not_for: [source-level diff, patch attribution without evidence]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: operating-systems-internals
+    name: Operating Systems Internals
+    family: systems
+    status: planned
+    priority: P3
+    summary: Reasons about scheduling, memory management, syscalls, and kernel-visible behavior.
+    use_when: A symptom depends on OS-level behavior.
+    not_for: [kernel exploitation]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: networking-and-protocol-analysis
+    name: Networking and Protocol Analysis
+    family: systems
+    status: planned
+    priority: P2
+    summary: Diagnoses connection, TLS, DNS, and application-protocol behavior from captures and metrics.
+    use_when: Latency or failures correlate with network behavior.
+    not_for: [unauthorized interception, large-scale scanning]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: observability-and-tracing
+    name: Observability and Tracing
+    family: systems
+    status: planned
+    priority: P2
+    summary: Designs metrics, logs, and traces that answer operational questions at acceptable cost.
+    use_when: An incident lacked the data needed to diagnose it.
+    not_for: [dashboard aesthetics]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: container-and-orchestration-review
+    name: Container and Orchestration Review
+    family: systems
+    status: planned
+    priority: P2
+    summary: Reviews images, resource limits, probes, scheduling, and isolation for correctness and safety.
+    use_when: Deploying or debugging containerized workloads.
+    not_for: [cluster provisioning]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  # ---------------------------------------------------------------------------------------------
+  # Planned: AI/ML and documentation
+  # ---------------------------------------------------------------------------------------------
+  - id: ml-model-review
+    name: ML Model Review
+    family: ai-ml
+    status: planned
+    priority: P2
+    summary: Reviews model selection, training data provenance, leakage, evaluation protocol, and failure modes.
+    use_when: A model or training pipeline is being adopted or audited.
+    not_for: [hyperparameter tuning]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: data-pipeline-review
+    name: Data Pipeline Review
+    family: ai-ml
+    status: planned
+    priority: P2
+    summary: Reviews ingestion, schema evolution, backfills, idempotency, and data quality controls.
+    use_when: A pipeline moves or transforms production data.
+    not_for: [dashboard design]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: ai-agent-system-design
+    name: AI Agent System Design
+    family: ai-ml
+    status: planned
+    priority: P2
+    summary: Designs agent loops, tool boundaries, context budgets, failure handling, and evaluation harnesses.
+    use_when: Building or reviewing an agentic system.
+    not_for: [prompt copywriting]
+    risk: high
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: prompt-and-context-engineering
+    name: Prompt and Context Engineering
+    family: ai-ml
+    status: planned
+    priority: P2
+    summary: Designs instructions, retrieval, and context structure with measurable evaluation.
+    use_when: Agent behavior must improve measurably.
+    not_for: [unmeasured prompt tweaking]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: scientific-research-and-state-of-the-art
+    name: Scientific Research and State of the Art
+    family: research
+    status: planned
+    priority: P2
+    summary: Extends technical-research with paper-level appraisal, replication status, and formal claim extraction.
+    use_when: The question is academic rather than engineering-oriented.
+    not_for: [engineering trade-off analysis]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: mathematical-formalization
+    name: Mathematical Formalization
+    family: research
+    status: planned
+    priority: P3
+    summary: Turns an informal claim into definitions, assumptions, and a checkable derivation.
+    use_when: A claim depends on a calculation or proof.
+    not_for: [empirical measurement]
+    risk: medium
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: reproducibility-review
+    name: Reproducibility Review
+    family: research
+    status: planned
+    priority: P2
+    summary: Audits whether a computational result can be re-run from the published artifacts.
+    use_when: A result will be depended on or cited.
+    not_for: [re-running the experiment for the author]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: technical-writing-review
+    name: Technical Writing Review
+    family: documentation
+    status: planned
+    priority: P2
+    summary: Reviews documentation for accuracy, testability, audience fit, and maintainability.
+    use_when: Docs are about to become the public contract.
+    not_for: [copy-editing only]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"
+
+  - id: repository-quality-review
+    name: Repository Quality Review
+    family: documentation
+    status: planned
+    priority: P3
+    summary: Audits repository hygiene, licensing, contributor paths, and reproducible builds.
+    use_when: Preparing an open-source release.
+    not_for: [application code review]
+    risk: low
+    packs: []
+    last_reviewed: "2026-10-22"

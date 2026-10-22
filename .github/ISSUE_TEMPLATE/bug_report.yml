@@ -1,0 +1,72 @@
+name: Bug report
+description: Something in the tooling, the validator, or a skill is broken or produces the wrong result.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not use this form for security issues. See SECURITY.md and report privately.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Skill content (a SKILL.md or reference)
+        - Validator or tooling
+        - Catalog or pack metadata
+        - Evaluation case
+        - Documentation
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: File or path
+      placeholder: "skills/universal-code-review/SKILL.md:88"
+    validations:
+      required: true
+
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened
+      description: The exact output, error, or behavior. Quote it; do not paraphrase.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Commands, prompt, and repository state. If a model was involved, name it and its version.
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: UniSkills version or commit
+      placeholder: "0.1.0 / a1b2c3d"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I ran the validators and included their output if relevant.
+          required: true
+        - label: This is not a security issue (those go through SECURITY.md).
+          required: true
