@@ -123,6 +123,10 @@ All commands were run from the repository root on 2026-10-22 with the system Pyt
 | `python3 tools/eval_runner.py --check` | `eval cases: 36  0 error(s), 0 warning(s)` |
 | `python3 -m unittest discover -s tools/tests -t .` | `Ran 51 tests ... OK` |
 
+Scalability of the validator suite was measured on generated repositories (50–400 skills): total cost
+grows linearly at ~5 ms per skill with constant 13 MB peak memory. Method and numbers:
+[`scalability.md`](scalability.md).
+
 The unit suite includes negative tests for every validator: a missing section, a drifted contract, an
 escaping link, an unlinked reference, a placeholder marker, a two-case eval file, an empty `must_not`,
 a stale catalog entry, a broken pack permutation, a broken link, a fixture secret, and an invalid eval

@@ -262,6 +262,8 @@ This project's own rules apply to its claims.
 - 51 unit tests pass, including a differential test of the in-repo YAML parser against PyYAML on every
   YAML file.
 - No secrets or personal absolute paths detected.
+- Validators scale linearly: 400 synthetic skills validate in ~2.1 s with flat memory, measured by
+  `tools/benchmark_scalability.py` and recorded in [`docs/scalability.md`](docs/scalability.md).
 
 **Not verified:**
 

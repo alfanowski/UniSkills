@@ -13,6 +13,7 @@ outside the repository (except temporary directories during tests).
 | `check_secrets.py` | Secret patterns and personal absolute paths | 1 on secret |
 | `eval_runner.py` | Eval schema validation, listing, prompt assembly | 1 on invalid case |
 | `render_catalog.py` | Generates `SKILL_CATALOG.md` and `ROADMAP.md` | 1 with `--check` if stale |
+| `benchmark_scalability.py` | Times the validators on generated repositories | 1 if a synthetic repo does not validate cleanly |
 
 ## Usage
 
