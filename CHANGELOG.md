@@ -49,6 +49,13 @@ experiment plan, ADR.
 
 **Examples** — four worked end-to-end examples with synthetic artifacts.
 
+### Project policy
+
+- Issues are open. External pull requests, external skills, and skill proposals are not accepted.
+  The repository ships no contribution guide, code of conduct, PR template, or skill-proposal template,
+  and CI runs on `push` and manual dispatch only. The authoring standard is published as an internal
+  contract, not as an invitation.
+
 ### Changed from the originating brief
 
 - Removed `assembly-machine-code-analysis` as a flagship skill. Instruction-level analysis is delivered

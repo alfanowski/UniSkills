@@ -18,7 +18,7 @@ reuse and easy embedding into other agents' contexts.
 | --- | --- | --- |
 | MIT | Shortest, universally understood, no patent clause, trivial to embed | No explicit patent grant; no trademark protection |
 | Apache-2.0 | Explicit patent grant, trademark clause, contributor clarity | Long text, notice obligations, more friction when copying snippets |
-| CC BY 4.0 (content only) | Natural fit for prose | Mixing licenses for code and text complicates contribution |
+| CC BY 4.0 (content only) | Natural fit for prose | Mixing licenses for code and text complicates reuse |
 | No license | — | Defaults to all rights reserved; blocks adoption |
 
 **Decision.** MIT for the whole repository. For a method-and-text project, the patent grant of Apache-2.0
@@ -49,8 +49,8 @@ reverse-engineering capability, and record the entry in the catalog as `deferred
   catalog documents both the removal and the addition.
 - Low-level content still exists where it has value: ISA/ABI, calling conventions, width and signedness,
   decompiler artifacts, and what cannot be recovered.
-- The taxonomy keeps `assembly-machine-code-analysis` visible as deferred so a future contributor does
-  not re-add it by accident.
+- The taxonomy keeps `assembly-machine-code-analysis` visible as deferred so it is not re-added by
+  accident.
 
 **Alternative rejected.** A thin assembly skill that restates the same evidence discipline with an ISA
 table. It would duplicate `reverse-engineering` and would be impossible to evaluate meaningfully without a
@@ -71,8 +71,8 @@ with no package manager access.
 **Decision.** No runtime dependencies. No `requirements.txt`. YAML handled by a documented subset parser.
 
 **Consequences.** `tools/yamlmini.py` is maintained in-repo and differential-tested against PyYAML when
-available. Unsupported YAML constructs fail loudly rather than being silently misparsed. Contributors
-must stay inside the subset when editing catalog or eval files.
+available. Unsupported YAML constructs fail loudly rather than being silently misparsed. Edits must stay
+inside the subset when changing catalog or eval files.
 
 **Alternative rejected.** Requiring PyYAML. It is one line to install, and it turns "clone and run the
 validator" into "set up an environment first" — a real adoption cost for a project whose audience is
@@ -120,8 +120,8 @@ fails if a `planned` entry has a directory.
 **Decision.** `catalog/skills.yaml` drives `SKILL_CATALOG.md` and `ROADMAP.md` through
 `tools/render_catalog.py`. CI runs `--check`.
 
-**Consequence.** Contributors edit YAML, not tables. Drift is a build failure rather than an editorial
-problem.
+**Consequence.** Catalog changes are made in YAML, not in tables. Drift is a build failure rather than an
+editorial problem.
 
 ---
 
@@ -181,6 +181,27 @@ them to agree for flagship entries.
 
 **Consequence.** Nothing in this release is marked `stable`. `stable` requires cross-model evaluation and
 recorded regressions, which have not been performed.
+
+---
+
+## D11 — Closed to external contributions
+
+**Status:** accepted, 2026-10-22.
+
+**Context.** Every skill is a contract with an evaluation case, a depth profile, and cross-references
+into the packs. Accepting an external skill means re-validating its interaction with the whole suite, and
+accepting external patches means reviewing method decisions the author owns.
+
+**Decision.** Issues are open. Pull requests, external skills, and skill proposals are not accepted. The
+repository ships no contribution guide, no code of conduct, no PR template, and no skill-proposal
+template; CI runs on `push` and manual dispatch only.
+
+**Consequences.** The authoring standard stays public as a contract and as documentation, explicitly
+marked internal. The only external channel is the issue tracker, plus the private security process.
+
+**Alternative rejected.** An open contribution model with a review gate. It was considered and rejected:
+the review cost per skill (two references, three eval cases, cross-pack consistency) is hours, and a
+rejected contribution costs the contributor more than it gains the project.
 
 ---
 

@@ -1,5 +1,21 @@
 # Release Process
 
+## 0. Scope and non-negotiables
+
+UniSkills is maintained by its author. Issues are open; external pull requests and external skills are not
+accepted. This document describes the internal procedure.
+
+Anyone—human or agent—working on this repository must respect:
+
+1. **Never claim a result that was not produced here.** Tests, evals, benchmarks, client checks: quote the
+   command and the output, or mark them not run.
+2. **No new runtime dependencies.** Standard library only; PyYAML is a CI-only test oracle.
+3. **Never hand-edit generated files.** `catalog/SKILL_CATALOG.md` and `catalog/ROADMAP.md` come from
+   `tools/render_catalog.py`.
+4. **The operating contract is copied verbatim** from `templates/operating-contract.md`.
+5. **A `planned` catalog entry never gets a directory.**
+6. **No secrets, tokens, or personal absolute paths** in any file.
+
 ## 1. Versioning
 
 Semantic versioning over the **skill behavior**, not the file count:
@@ -15,7 +31,7 @@ Each skill carries its own `metadata.version`. The repository version lives in `
 
 ## 2. Gates for merging a skill change
 
-All of the following must pass before review:
+All of the following must pass before committing:
 
 ```bash
 python3 tools/validate_skills.py

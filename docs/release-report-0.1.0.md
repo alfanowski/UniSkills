@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-22
 **Author:** implementation agent, under the operating profile of the repository owner
-**Status:** first scaffold complete; not released, not published, not evaluated against a model
+**Status:** published as `v0.1.0` on 2026-10-22; evaluation against a model remains incomplete
 
 This report records what was verified, what was not, and what remains open. It is written so that a
 reviewer can disagree with a specific line rather than with the whole document.
@@ -22,15 +22,9 @@ reviewer can disagree with a specific line rather than with the whole document.
 | `origin` remote | unchanged (`git@github.com` rewritten by clone as HTTPS, as configured) |
 
 The repository was cloned from the existing remote; no second repository, organization, or remote was
-created. `main` remains unborn locally, consistent with the rule of never committing directly to the main
-branch. Publish sequence, if authorized:
-
-```bash
-git branch -m feat/v0.1.0 main    # or: git checkout -b main && git merge --ff-only feat/v0.1.0
-git push -u origin main
-```
-
-No push, tag, release, or issue was created.
+created. Work was committed on `feat/v0.1.0`, then published on 2026-10-22 after explicit authorization:
+the branch became `main`, was pushed, tagged `v0.1.0`, and released. CI is green on Python 3.9 and 3.12.
+No issue was opened.
 
 ## 2. Initial and final state
 
@@ -213,9 +207,9 @@ These were found by reviewing this work, not by a third party.
 
 | Action | Status |
 | --- | --- |
-| Push `feat/v0.1.0` to `origin` / create `main` | not performed |
-| Create a tag or GitHub release | not performed |
-| Switch license to Apache-2.0 | not performed |
-| Install a client or call a model API | not performed |
-| Modify repository settings, topics, or description | not performed |
+| Push `main` to `origin` | performed 2026-10-22 |
+| Create tag `v0.1.0` and GitHub release | performed 2026-10-22 |
+| Switch license to Apache-2.0 | not performed; MIT confirmed by the owner |
+| Call a model API | performed: three smoke tasks via the local Ollama daemon, cloud model `beam:cloud`; no client installed |
+| Modify repository settings, topics, or description | performed: description, nine topics, private vulnerability reporting, secret scanning |
 | Delete or rename anything outside the repository | not performed |

@@ -25,7 +25,7 @@ Three options were considered:
 | Option | Cost | Problem |
 | --- | --- | --- |
 | Every skill imports a shared file by path | No duplication | Breaks single-skill install; wrong for the format |
-| Generate bundles from templates at release time | Build step, generated files in git | Contributors edit generated code; reviews get noisy |
+| Generate bundles from templates at release time | Build step, generated files in git | Edits land in generated files; reviews get noisy |
 | Embed a compact contract in every skill, keep depth in references | ~110 duplicated words per skill | Accepted |
 
 The third option wins because the duplicated part is small, stable, and machine-checked.
@@ -34,7 +34,7 @@ embedded copy drifts. Drift is therefore impossible to merge, which removes the 
 duplication.
 
 What is **not** duplicated: the full method, evidence taxonomy, depth rationale, domain checklists. Those
-live in `docs/` for contributors and in per-skill `references/` for agents.
+live in `docs/` as the canonical reference and in per-skill `references/` for agents.
 
 ## 3. Progressive disclosure budget
 
@@ -129,7 +129,7 @@ templates/                skill template, finding schema, output templates
 tools/                    validators, parser, renderer, tests
 evals/                    cases, rubrics, fixtures
 examples/                 worked end-to-end examples with synthetic data
-.github/                  CI, issue and PR templates
+.github/                  CI and issue configuration
 ```
 
 ## 9. Rejected alternatives

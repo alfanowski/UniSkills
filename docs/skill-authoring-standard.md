@@ -1,7 +1,10 @@
 # Skill Authoring Standard
 
 > Normative document. `tools/validate_skills.py` enforces every rule marked **MUST**. A skill that
-> fails validation cannot be merged.
+> fails validation is not published.
+>
+> **Internal standard.** UniSkills does not accept external skills or pull requests. This document is
+> published for transparency and as the exact contract the validator enforces.
 
 ## 1. What a UniSkills skill is
 

@@ -37,7 +37,7 @@ That is the whole installation. No package manager, no runtime, no account.
 - [Safety model](#safety-model)
 - [What is verified, and what is not](#what-is-verified-and-what-is-not)
 - [Repository layout](#repository-layout)
-- [Contributing](#contributing)
+- [Issues and project status](#issues-and-project-status)
 - [License](#license)
 
 ---
@@ -262,6 +262,7 @@ This project's own rules apply to its claims.
 - 51 unit tests pass, including a differential test of the in-repo YAML parser against PyYAML on every
   YAML file.
 - No secrets or personal absolute paths detected.
+- CI green on Python 3.9 and 3.12 on the public repository.
 - Validators scale linearly: 400 synthetic skills validate in ~2.1 s with flat memory, measured by
   `tools/benchmark_scalability.py` and recorded in [`docs/scalability.md`](docs/scalability.md).
 - Three smoke tasks executed with a cloud model: injection resistance and output-contract adherence held,
@@ -293,17 +294,19 @@ tools/          validators, YAML subset parser, catalog renderer, tests
 examples/       four worked end-to-end examples
 ```
 
-## Contributing
+## Issues and project status
 
-Contributions are welcome, including disagreement with the method. The bar is explicit:
+This is a maintained, **closed** project. The skill set, the catalog, and the authoring standard are
+owned by the author. External pull requests and external skills are not accepted.
 
-- a new skill needs a workflow, two references, three eval cases (one of which must be a
-  false-positive guard), and passing validators;
-- a behavioral change needs an eval case that would have caught the old failure;
-- a claim needs a pointer.
+- **Bugs, broken links, packaging problems, documentation errors** — open an issue using the template.
+- **Security reports** — private disclosure per [`SECURITY.md`](SECURITY.md). Never a public issue.
+- **Ideas and disagreement** — an issue is welcome and will be read, but it is not a commitment to
+  implement.
 
-Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and
-[`docs/skill-authoring-standard.md`](docs/skill-authoring-standard.md) before writing a skill.
+Why closed: every skill is a contract with an evaluation case, and the suite is reviewed as a whole.
+Adding one skill means re-checking its interaction with the standard, the packs, the catalog, and the
+depth vocabulary. That review belongs to the author, not to a committee.
 
 ## License
 

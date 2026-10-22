@@ -48,5 +48,4 @@ Use these shared examples to keep graders aligned:
 - Read the case expectations **before** the response, then grade without re-reading the expectations
   mid-sentence.
 - Do not reward length, confidence, or formatting.
-- If the response is correct for a reason the rubric did not anticipate, record it as a rubric gap — that
-  is a contribution to the lab.
+- If the response is correct for a reason the rubric did not anticipate, record it as a rubric gap.

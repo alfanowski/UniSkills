@@ -81,7 +81,7 @@ If you want to test whether a skill helps, the protocol is:
 
 A single run, or a comparison across different models, is not evidence of anything.
 
-## 7. Practical guidance for contributors
+## 7. Practical guidance for skill authors
 
 - If you are writing a `SKILL.md` and it is approaching 500 lines, you are probably writing a reference.
 - If a reference is shorter than ~40 lines and is always relevant, inline it.

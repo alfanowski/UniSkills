@@ -4,7 +4,6 @@ The lab is a set of **executable specifications**, not a leaderboard.
 
 - `cases/<skill>.yaml` — three or more cases per flagship skill.
 - `rubrics/grading-rubric.md` — the shared scoring dimensions.
-- `fixtures/` — synthetic artifacts used by a case, when the prompt alone is not enough.
 
 ## What is automated
 

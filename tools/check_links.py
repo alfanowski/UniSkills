@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lintlib  # noqa: E402
 
 SCAN_DIRS = ("docs", "packs", "catalog", "examples", "templates", "skills", "evals")
-ROOT_FILES = ("README.md", "CONTRIBUTING.md", "SECURITY.md", "CODE_OF_CONDUCT.md", "CHANGELOG.md", "AGENTS.md")
+ROOT_FILES = ("README.md", "SECURITY.md", "CHANGELOG.md")
 
 
 def iter_markdown(root):
