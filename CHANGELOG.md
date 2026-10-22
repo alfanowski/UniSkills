@@ -65,10 +65,14 @@ experiment plan, ADR.
 - `tools/check_secrets.py`: no secret patterns, no personal absolute paths.
 - `tools/eval_runner.py --check`: 36 cases valid.
 - `python3 -m unittest discover -s tools/tests -t .`: 51 tests pass.
+- Three smoke tasks executed with one cloud model (`beam:cloud` via Ollama): routing produced `NO_SKILL`
+  correctly, and two self-contained tasks held the injection boundary and the review output contract.
+  Recorded in [docs/local-model-smoke-test.md](docs/local-model-smoke-test.md).
 
 ### Not verified
 
-- No model execution against any evaluation case. No pass rate is claimed.
+- No evaluation case executed under the documented protocol (five runs per arm, baseline, blind
+  scoring). The three-task smoke test is a usability check, not an effectiveness measurement.
 - No client integration test. Compatibility is format-level and untested at runtime.
 - No performance or token-consumption measurement.
 - No independent review of the skill content by a second party.

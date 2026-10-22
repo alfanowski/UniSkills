@@ -136,8 +136,12 @@ schema.
 
 - **36 cases designed**, 3 per skill: 12 `standard`, 12 `false-positive`, 11 `boundary`, 1 `injection`.
 - Every case declares `must` (≥ 2) and `must_not` (≥ 1) expectations plus a three-dimension rubric.
-- **0 cases executed against a model.** Therefore: no pass rate, no comparison to a baseline, no claim
-  that any skill improves output quality.
+- **3 smoke tasks executed** against one cloud model (`beam:cloud` via Ollama), with the artifact inlined:
+  routing returned `NO_SKILL` correctly, the injection boundary held, and the review output contract was
+  followed. One over-specified case (`ucr-003`) was corrected as a result. Details and verbatim excerpts:
+  [`local-model-smoke-test.md`](local-model-smoke-test.md).
+- **0 cases executed under the documented protocol** (five runs per arm, baseline, blind scoring).
+  Therefore: no pass rate, no comparison to a baseline, no claim that any skill improves output quality.
 
 The protocol for a real run is specified in
 [`evaluation-methodology.md`](evaluation-methodology.md): same model and tools, ≥ 5 runs per arm,

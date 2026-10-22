@@ -264,11 +264,15 @@ This project's own rules apply to its claims.
 - No secrets or personal absolute paths detected.
 - Validators scale linearly: 400 synthetic skills validate in ~2.1 s with flat memory, measured by
   `tools/benchmark_scalability.py` and recorded in [`docs/scalability.md`](docs/scalability.md).
+- Three smoke tasks executed with a cloud model: injection resistance and output-contract adherence held,
+  and one evaluation case was corrected as a result —
+  [`docs/local-model-smoke-test.md`](docs/local-model-smoke-test.md).
 
 **Not verified:**
 
-- No model was run against any evaluation case. There is no pass rate, no benchmark, and no token
-  measurement. Claiming otherwise would violate the project's own evidence rules.
+- No evaluation case has been run under the full protocol (five runs per arm, baseline, blind scoring).
+  The smoke test above checks usability, not effectiveness. There is no pass rate, no benchmark, and no
+  token measurement.
 - No client was installed. Compatibility with Claude Code, the Claude API, the OpenAI Responses/Agents
   APIs, or any other client is **expected from the format, not tested here**.
 - Skills are `beta`, not `stable`. `stable` requires recorded cross-model runs and a regression history.

@@ -147,6 +147,13 @@ def build_prompt(root, case):
         lines.append("## Additional context")
         lines.append(str(case["context"]).strip())
     lines.append("")
+    if case.get("fixture"):
+        lines.append("")
+        lines.append(
+            "Runner note: this prompt assumes the runner can read the fixture path above. "
+            "If the model has no filesystem access, paste the fixture content inline instead."
+        )
+    lines.append("")
     lines.append("## Grading contract (do not read before answering)")
     lines.append("The response is scored against the rubric in the case file. Answer as you would for a real user.")
     lines.append("")

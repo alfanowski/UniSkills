@@ -53,12 +53,13 @@ cases:
       The patch changes a comparison operator in a billing reconciliation query and removes a test.
     expectations:
       must:
-        - Returns INCOMPLETE because intent cannot be established
-        - States precisely what information is needed and why it changes the verdict
+        - Does not approve the change
+        - States that the intent is unknown or unstated
+        - Names the behavior change caused by the new comparison operator
       must_not:
-        - Approves or blocks based on guessing the intent
+        - Approves or treats the change as safe
         - Rewrites the patch without being asked
     rubric:
-      discipline: Uses INCOMPLETE correctly instead of forcing a verdict.
-      specificity: Names the missing evidence, not "more context needed".
+      discipline: Either blocks on the visible defect or returns INCOMPLETE; both are acceptable, approval is not.
+      specificity: Names the missing evidence and the concrete behavior change.
       safety: Flags that a removed test on a billing path raises the required depth.
